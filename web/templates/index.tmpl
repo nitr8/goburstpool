@@ -1,94 +1,134 @@
 {{ define "index" }}
 {{ template "header" }}
+<br>
 <div class="row">
+  <!-- stats pannel -->
   <div class="column col-md-4 col-sm-12 col-xs-12">
-    <div class="row">
-      <div class="column col-md-6 col-sm-6 col-xs-12">
-        <h4 class="sub-header">Deadline</h4>
-        <div class="text-center">
-          <div class="clock" id="deadline-clock">
-            <div>
-              <span class="hours"></span>
-              <div class="smalltext">Hours</div>
-            </div>
-            <div>
-              <span class="minutes"></span>
-              <div class="smalltext">Minutes</div>
-            </div>
-            <div>
-              <span class="seconds"></span>
-              <div class="smalltext">Seconds</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="column col-md-6 col-sm-6 col-xs-12">
-        <h4 class="sub-header">Elapsed</h4>
-        <div class="text-center">
-          <div class="clock" id="round-elapsed-clock">
-            <div>
-              <span class="hours"></span>
-              <div class="smalltext">Hours</div>
-            </div>
-            <div>
-              <span class="minutes"></span>
-              <div class="smalltext">Minutes</div>
-            </div>
-            <div>
-              <span class="seconds"></span>
-              <div class="smalltext">Seconds</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="column col-md-12 col-sm-12 col-xs-12">
-        <h4 class="sub-header">Current Block</h4>
-        <div class="row">
-          <div class="column col-md-6 col-sm-6 col-xs-6 small-padding">
-            <div class="panel panel-default">
-              <div class="panel-heading">Height</div>
-              <div class="panel-body text-center">
-                <div id="current-block-height">(none)</div>
-              </div>
-            </div>
-          </div>
-          <div class="column col-md-6 col-sm-6 col-xs-6 small-padding">
-            <div class="panel panel-default">
-              <div class="panel-heading">Base Target</div>
-              <div class="panel-body text-center">
-                <div id="current-block-base-target">(none)</div>
-              </div>
 
-            </div>
+    <div class="row">
+      <!-- Deadline -->
+      <div class="column col-md-6 col-sm-6 col-xs-12">
+        <!-- pan1 -->
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title text-center">Deadline</h3>
           </div>
-        </div>
-        <div class="row">
-          <div class="column col-md-6 col-sm-6 col-xs-6 small-padding">
-            <div class="panel panel-default">
-              <div class="panel-heading">Best Deadline</div>
-              <div class="panel-body text-center">
-                <div id="current-block-best-deadline" class="format-deadline">(none)</div>
+          <div class="panel-body text-center">
+            <div class="clock" id="deadline-clock">
+              <div>
+                <span class="hours"></span>
+                <div class="smalltext">Hours</div>
               </div>
-            </div>
-          </div>
-          <div class="column col-md-6 col-sm-6 col-xs-6 small-padding">
-            <div class="panel panel-default">
-              <div class="panel-heading">Best Miner</div>
-              <div class="panel-body text-center">
-                <div id="current-block-best-miner">(none)</div>
+              <div>
+                <span class="minutes"></span>
+                <div class="smalltext">Minutes</div>
+              </div>
+              <div>
+                <span class="seconds"></span>
+                <div class="smalltext">Seconds</div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <!-- Elapsed -->
+      <div class="column col-md-6 col-sm-6 col-xs-12">
+        <!-- pan1 -->
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">Elapsed</h3>
+          </div>
+          <div class="panel-body text-center">
+            <div class="clock" id="round-elapsed-clock">
+              <div>
+                <span class="hours"></span>
+                <div class="smalltext">Hours</div>
+              </div>
+              <div>
+                <span class="minutes"></span>
+                <div class="smalltext">Minutes</div>
+              </div>
+              <div>
+                <span class="seconds"></span>
+                <div class="smalltext">Seconds</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Current Block -->
+      <div class="column col-md-12 col-sm-12 col-xs-12">
+        <!-- header -->
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title text-center">Current Block</h3>
+          </div>
+          <div class="panel-body">
+            <!-- Height & Target -->
+            <div class="row">
+              <!-- Height -->
+              <div class="column col-md-6 col-sm-6 col-xs-6 small-padding">
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <span class="pull-right"><div id="current-block-height">(none)</div></span>
+                    Height
+                  </li>
+                </ul>
+              </div>
+              <!-- Base Target -->
+              <div class="column col-md-6 col-sm-6 col-xs-6 small-padding">
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <span class="pull-right"><div id="current-block-base-target">(none)</div></span>
+                    Base Target
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!-- Best Deadline & Miner -->
+            <div class="row">
+              <!-- Best Deadline -->
+              <div class="column col-md-6 col-sm-6 col-xs-6 small-padding">
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <span class="pull-right"><div id="current-block-best-deadline" class="format-deadline">(none)</div></span>
+                    Best Deadline
+                  </li>
+                </ul>
+              </div>
+              <!-- Best Miner -->
+              <div class="column col-md-6 col-sm-6 col-xs-6 small-padding">
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <span class="pull-right"><div id="current-block-best-miner">(none)</div></span>
+                    Best Miner
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
+
+  <!-- graph pannel -->
   <div class="column col-md-8 col-sm-12 col-xs-12">
-    <h4 class="sub-header">Current Round Shares</h4>
-    <div id="share-chart" style="width: 100%; min-height: 300px;"></div>
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Current Round Shares</h3>
+      </div>
+      <div class="panel-body">
+        <div id="share-chart" style="width: 100%; min-height: 300px;"></div>
+      </div>
+    </div>    
   </div>
 </div>
 
+<!-- bottom pannel -->
 <div class="row">
   <ul class="nav nav-tabs" id="tabs">
     <li class="active"><a data-toggle="tab" href="#subscribe-tab">Subscribe</a></li>
@@ -179,13 +219,13 @@
                     var winnerPercent = {{ .Cfg.WinnerShare }} * 100.0;
                     var poolPercent = 100.0 - winnerPercent;
                     poolTypeSpan.innerHTML =
-                      String(winnerPercent.toFixed(0)) + ' (winner) ' + '-' +
-                      String(poolPercent.toFixed(0))   + ' (pool)';
+                      String(winnerPercent.toFixed(0)) + '% to <span class="label label-success">winner</span> ' + '&nbsp;-&nbsp;' +
+                      String(poolPercent.toFixed(0))   + '% to <span class="label label-info">pool</span>';
                   </script>
                 </td>
               </tr>
               <tr>
-                <th>Minimum Payout: </th><td><span id="minimum-payout"></span></td>
+                <th>Minimum Payout: </th><td><span id="minimum-payout"></span> in BURST</td>
                 <script>
                   $('#minimum-payout').text({{ .Cfg.MinimumPayout }} / 100000000);
                 </script>
@@ -200,7 +240,7 @@
                 <th>Deadline Limit: </th><td>{{ .Cfg.DeadlineLimit }}</td>
               </tr>
               <tr>
-                <th>Block Payout Delay: </th><td>{{ .Cfg.BlockHeightPayoutDelay }} Blocks</td>
+                <th>Block Payout Delay: </th><td><span class="label label-default">{{ .Cfg.BlockHeightPayoutDelay }}</span> blocks</td>
               </tr>
               <tr>
                 <th>Tx Fee: </th><td><span id="tx-fee"></span></td>
@@ -210,11 +250,11 @@
               </tr>
               <tr>
                 <th>nAvg</th>
-                <td>{{ .Cfg.NAVG }} </td>
+                <td><span class="label label-default">{{ .Cfg.NAVG }}</span> blocks</td>
               </tr>
               <tr>
                 <th>nMin</th>
-                <td>{{ .Cfg.NMin }} </td>
+                <td><span class="label label-default">{{ .Cfg.NMin }}</span> blocks</td>
               </tr>
             </table>
           </div>
@@ -227,7 +267,7 @@
             <h3><strong>How to mine?</strong></h3>
           </div>
           <div class="panel-body">
-            <strong>Generate plot from own Acount</strong><br>
+            <strong>Generate plot with your numeric account ID</strong><br>
             <p>
               You need a plot that was generated for your own account (just like on solo mining)
               please read the <a target="_blank" href="https://bitcointalk.org/index.php?topic=731923.0">forum</a> how to generate plot.
@@ -238,7 +278,7 @@
               <li>Put your account secret passphrase there (the one you use to login into your wallet)</li>
               <li>Set reward recipient to <strong>{{ .Cfg.PoolPublicID }}</strong></li>
               <li>Click submit</li>
-              <li>Wait <strong>4</strong> blocks</li>
+              <li>Wait <span class="label label-default">4</span> blocks</li>
             </ul>
             <strong>Download and run miner</strong><br>
             <ul class="list-group">
