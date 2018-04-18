@@ -7,13 +7,22 @@ GOTEST=$(GOCMD) test
 GOGET=$(GOCMD) get
 BINARY_NAME=goburstpool
 
+CC=gcc
+CFLAGS=$(OSFLAGS) -Wall -m64 -O3 -mtune=native -fPIC
+
 start:
 	make build
 	./$(BINARY_NAME)
 api:
 	protoc --go_out=plugins=grpc:src/ api/api.proto
-build: deps
+build: deps libs
 	@GOPATH=$(GOPATH) $(GOBUILD) -o $(BINARY_NAME)
+libs:
+	cd src/libs; \
+	$(CC) $(CFLAGS) -c -o shabal64.o shabal64.s; \
+	$(CC) $(CFLAGS) -c -o mshabal_sse4.o mshabal_sse4.c; \
+	$(CC) $(CFLAGS) -mavx2 -c -o mshabal256_avx2.o mshabal256_avx2.c; \
+	$(CC) $(CFLAGS) -shared -o libutils.a utils.c shabal64.o mshabal_sse4.o mshabal256_avx2.o -lpthread -std=gnu99;
 deps:
 	@GOPATH=$(GOPATH) $(GOGET) github.com/gorilla/websocket
 	@GOPATH=$(GOPATH) $(GOGET) gopkg.in/yaml.v2
