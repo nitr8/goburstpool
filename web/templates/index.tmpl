@@ -134,8 +134,6 @@
     <li class="active"><a data-toggle="tab" href="#subscribe-tab">Subscribe</a></li>
     <li><a data-toggle="tab" href="#history-tab" data-url="wonblocks">History</a></li>
     <li><a data-toggle="tab" href="#all-miners-tab" data-url="miners">All Miners</a></li>
-    <li><a data-toggle="tab" href="#config-tab">Config</a></li>
-    <li><a data-toggle="tab" href="#quick-info-tab">Quick Info</a></li>
   </ul>
   <div class="tab-content">
     <div id="subscribe-tab" class="tab-pane active">
@@ -200,141 +198,7 @@
     </div>
     <div id="history-tab" class="tab-pane"></div>
     <div id="all-miners-tab" class="tab-pane"></div>
-    <div id="config-tab" class="tab-pane">
-      <br>
-      <div class="column col-md-1 col-sm-12 col-xs-12"></div>
-      <div class="column col-md-5 col-sm-12 col-xs-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3><strong>Pool ({{ .Cfg.Version }}) Config</strong></h3>
-          </div>
-          <div class="panel-body">
-            <table class="table">
-              <tr>
-                <th>Pool Type: </th>
-                <td>
-                  <span id="pool-type"></span>
-                  <script>
-                    var poolTypeSpan = document.getElementById('pool-type');
-                    var winnerPercent = {{ .Cfg.WinnerShare }} * 100.0;
-                    var poolPercent = 100.0 - winnerPercent;
-                    poolTypeSpan.innerHTML =
-                      String(winnerPercent.toFixed(0)) + '% to <span class="label label-success">winner</span> ' + '&nbsp;-&nbsp;' +
-                      String(poolPercent.toFixed(0))   + '% to <span class="label label-info">pool</span>';
-                  </script>
-                </td>
-              </tr>
-              <tr>
-                <th>Minimum Payout: </th><td><span id="minimum-payout"></span> in BURST</td>
-                <script>
-                  $('#minimum-payout').text({{ .Cfg.MinimumPayout }} / 100000000);
-                </script>
-              </tr>
-              <tr>
-                <th>Pool Fee: </th>
-                <td>
-                  <span id="pool-fee-share"></span>
-                </td>
-              </tr>
-              <tr>
-                <th>Deadline Limit: </th><td>{{ .Cfg.DeadlineLimit }}</td>
-              </tr>
-              <tr>
-                <th>Block Payout Delay: </th><td><span class="label label-default">{{ .Cfg.BlockHeightPayoutDelay }}</span> blocks</td>
-              </tr>
-              <tr>
-                <th>Tx Fee: </th><td><span id="tx-fee"></span></td>
-                <script>
-                  $('#tx-fee').text({{ .Cfg.TxFee }} / 100000000);
-                </script>
-              </tr>
-              <tr>
-                <th>nAvg</th>
-                <td><span class="label label-default">{{ .Cfg.NAVG }}</span> blocks</td>
-              </tr>
-              <tr>
-                <th>nMin</th>
-                <td><span class="label label-default">{{ .Cfg.NMin }}</span> blocks</td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </div>
-      <div class="column col-md-1 col-sm-12 col-xs-12"></div>
-      <div class="column col-md-4 col-sm-12 col-xs-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3><strong>How to mine?</strong></h3>
-          </div>
-          <div class="panel-body">
-            <strong>Generate plot with your numeric account ID</strong><br>
-            <p>
-              You need a plot that was generated for your own account (just like on solo mining)
-              please read the <a target="_blank" href="https://bitcointalk.org/index.php?topic=731923.0">forum</a> how to generate plot.
-            </p>
-            <strong>Set pool as reward recipient</strong><br>
-            <ul class="list-group">
-              <li>Go to the <a target="_blank" href="https://wallet.burst.cryptoguru.org:8125/rewardassignment.html">reward assignment page</a></li>
-              <li>Put your account secret passphrase there (the one you use to login into your wallet)</li>
-              <li>Set reward recipient to <strong>{{ .Cfg.PoolPublicID }}</strong></li>
-              <li>Click submit</li>
-              <li>Wait <span class="label label-default">4</span> blocks</li>
-            </ul>
-            <strong>Download and run miner</strong><br>
-            <ul class="list-group">
-              <li>Download miner <a target="_blank" href="https://github.com/Creepsky/creepMiner/releases">creepMiner</a></li>
-              <li>Edit <strong>mining.conf</strong>: set <strong>poolUrl</strong> and <strong>miningInfoUrl</strong> to <strong>{{ .Cfg.PoolAddress }}:{{ .Cfg.PoolPort }}</strong></li>
-              <li>Run miner</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="column col-md-1 col-sm-12 col-xs-12"></div>
-    </div>
-    <div id="quick-info-tab" class="tab-pane">
-      <br>
-      <div class="column col-md-6 col-sm-12 col-xs-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <strong>Quick Info on Effective Capacity and Historical Share</strong>
-          </div>
-          <div class="panel-body">
-            The pool will use the best confirmed deadlines of each miner from the last <b>{{ .Cfg.NAVG }}</b> blocks to estimate the <b>Effective Capacity</b> of the miners (<b>minerPlotSize</b>) as well as the total pool size (<b>poolPlotSize</b>) to determine the <b>historicalShare</b> of the miners:
-            <div class="alert alert-info text-center">
-              historicalShare = minerPlotSize / poolPlotSize
-            </div>
-            The <b>Effective Capacity</b> determines the miners payouts from historical shares, so miners should work on optimizing their effective capacity. Under good conditions (fast scan time and good confirmation time from the pool) the effective capacity should somehow reproduce your real plot size but some deviation of 10-20% can be normal. If your effective capacity deviates significantly from your actual plot size, the first thing you can do is to optimize your targetDL. A good value to start with can be
-            <div class="alert alert-info text-center">
-              targetDL = 720 * netDifficulty / yourPlotSize
-            </div>
-            You can use the calculator no the right to determine this targetDL for you. After adjusting your targetDL <b>it will take {{ .Cfg.NAVG }} blocks for the effective capacity to converge</b>. So be patient. If you are interested in more information, you may want to visit the <a href="/info" target="_blank">info page</a>.
-          </div>
-        </div>
-      </div>
-      <div class="column col-md-6 col-sm-12 col-xs-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <strong>Calculator</strong>
-          </div>
-          <div class="panel-body">
-            <form>
-              <div class="form-group">
-                <label>Network Difficulty (TB)</label>
-                <div>{{ .NetDiff }}</div>
-                <br>
-                <label>Plotsize (TB)</label>
-                <input type="float64" class="form-control" id="plot-size" placeholder="0.00">
-              </div>
-              <button id="target-deadline-button" class="btn btn-primary">Calculate</button>
-            </form>
-            <div class="form-group">
-              <label>Target Deadline (s)</label>
-              <div id ="target-deadline"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+
   </div>
 </div>
 
@@ -578,6 +442,181 @@
     });
   });
 </script>
+
+
+<!-- Modal -->
+<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="aboutModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="aboutModalLabel">About</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Burstpool written in GO by the PoC Consortium development team. <br>License for <a href="https://github.com/PoC-Consortium/goburstpool/blob/master/LICENSE.md">Goburstpool</a>.</p>
+        <p>creepPool is curently running {{ .Cfg.Version }}<p>
+        <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center" style="padding:4px">
+              Pool Type
+              <span class="pull-right" id="pool-type"></span>
+              <script>
+                var poolTypeSpan = document.getElementById('pool-type');
+                var winnerPercent = {{ .Cfg.WinnerShare }} * 100.0;
+                var poolPercent = 100.0 - winnerPercent;
+                poolTypeSpan.innerHTML =
+                  String(winnerPercent.toFixed(0)) + ' (winner) ' + '-' +
+                  String(poolPercent.toFixed(0))   + ' (pool)';
+              </script>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center" style="padding:4px" data-toggle="tooltip" data-placement="top" title="" data-original-title="TBD">
+              Minimum Payout
+              <span class="pull-right" id="minimum-payout"></span>
+              <script>
+                $('#minimum-payout').text({{ .Cfg.MinimumPayout }} / 100000000);
+              </script>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center" style="padding:4px">
+                Pool Fee
+                <span class="pull-right" id="pool-fee-share"></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center" style="padding:4px">
+              Deadline Limit
+              <span class="pull-right"><td>{{ .Cfg.DeadlineLimit }}</td></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center" style="padding:4px">
+              Block Payout Delay
+              <span class="pull-right"><td>{{ .Cfg.BlockHeightPayoutDelay }} Blocks</td></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center" style="padding:4px">
+              Tx Fee
+              <span class="pull-right" id="tx-fee"></span>
+              <script>
+                $('#tx-fee').text({{ .Cfg.TxFee }} / 100000000);
+              </script>
+            </li>            
+            <li class="list-group-item d-flex justify-content-between align-items-center" style="padding:4px">
+              nAvg
+              <span class="pull-right"><td>{{ .Cfg.NAVG }} </td></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center" style="padding:4px">
+              nMin
+              <span class="pull-right"><td>{{ .Cfg.NMin }} </td></span>
+            </li>
+
+        </ul>
+
+
+            <div class="alert alert-info text-center">
+              <strong>Quick Info on Effective Capacity and Historical Share</strong>
+            </div>
+            The pool will use the best confirmed deadlines of each miner from the last <b>{{ .Cfg.NAVG }}</b> blocks to estimate the <b>Effective Capacity</b> of the miners (<b>minerPlotSize</b>) as well as the total pool size (<b>poolPlotSize</b>) to determine the <b>historicalShare</b> of the miners:
+            <div class="alert alert-info text-center">
+              historicalShare = minerPlotSize / poolPlotSize
+            </div>
+            The <b>Effective Capacity</b> determines the miners payouts from historical shares, so miners should work on optimizing their effective capacity. Under good conditions (fast scan time and good confirmation time from the pool) the effective capacity should somehow reproduce your real plot size but some deviation of 10-20% can be normal. If your effective capacity deviates significantly from your actual plot size, the first thing you can do is to optimize your targetDL. A good value to start with can be
+            <div class="alert alert-info text-center">
+              targetDL = 720 * netDifficulty / yourPlotSize
+            </div>
+            You can use the calculator no the right to determine this targetDL for you. After adjusting your targetDL <b>it will take {{ .Cfg.NAVG }} blocks for the effective capacity to converge</b>. So be patient. If you are interested in more information, you may want to visit the <a href="/info" target="_blank">info page</a>.
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- !model-->
+
+
+<!-- Modal -->
+<div class="modal fade" id="calcModal" tabindex="-1" role="dialog" aria-labelledby="calcModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="calcModalLabel">Calculator</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+
+
+            <form>
+              <div class="form-group">
+                <label>Network Difficulty (TB)</label>
+                <div>{{ .NetDiff }}</div>
+                <br>
+                <label>Plotsize (TB)</label>
+                <input type="float64" class="form-control" id="plot-size" placeholder="0.00">
+              </div>
+              <button id="target-deadline-button" class="btn btn-primary">Calculate</button>
+            </form>
+            <div class="form-group">
+              <label>Target Deadline (s)</label>
+              <div id ="target-deadline"></div>
+            </div>
+
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- !model-->
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="howtoModal" tabindex="-1" role="dialog" aria-labelledby="howtoModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="howtoModalLabel">How to mine?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+            <strong>Generate plot with your numeric account ID</strong><br>
+            <p>
+              You need a plot that was generated for your own account (just like on solo mining)
+              please read the <a target="_blank" href="https://bitcointalk.org/index.php?topic=731923.0">forum</a> how to generate plot.
+            </p>
+            <strong>Set pool as reward recipient</strong><br>
+            <ul class="list-group">
+              <li>Go to the <a target="_blank" href="https://wallet.burst.cryptoguru.org:8125/rewardassignment.html">reward assignment page</a></li>
+              <li>Put your account secret passphrase there (the one you use to login into your wallet)</li>
+              <li>Set reward recipient to <strong>{{ .Cfg.PoolPublicID }}</strong></li>
+              <li>Click submit</li>
+              <li>Wait <span class="label label-default">4</span> blocks</li>
+            </ul>
+            <strong>Download and run miner</strong><br>
+            <ul class="list-group">
+              <li>Download miner <a target="_blank" href="https://github.com/Creepsky/creepMiner/releases">creepMiner</a></li>
+              <li>Edit <strong>mining.conf</strong>: set <strong>poolUrl</strong> and <strong>miningInfoUrl</strong> to <strong>{{ .Cfg.PoolAddress }}:{{ .Cfg.PoolPort }}</strong></li>
+              <li>Run miner</li>
+            </ul>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- !model-->
+
 
 {{ template "footer" }}
 {{ end }}
